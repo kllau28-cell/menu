@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sandwich Order App</title>
+</head>
+<body>
+
+<h1>Sandwich Shop</h1>
+
+<h2>Sandwich</h2>
+<select id="sandwich">
+    <option value="none">None</option>
+    <option value="chicken">Chicken ($5.25)</option>
+    <option value="beef">Beef ($6.25)</option>
+    <option value="tofu">Tofu ($5.75)</option>
+</select>
+<input type="number" id="sandwichQty" placeholder="Quantity" min="0">
+
+<h2>Drink</h2>
+<select id="drink">
+    <option value="none">None</option>
+    <option value="small">Small ($1.00)</option>
+    <option value="medium">Medium ($1.75)</option>
+    <option value="large">Large ($2.25)</option>
+</select>
+<input type="number" id="drinkQty" placeholder="Quantity" min="0">
+
+<h2>Fries</h2>
+<select id="fries">
+    <option value="none">None</option>
+    <option value="small">Small ($1.00)</option>
+    <option value="medium">Medium ($1.50)</option>
+    <option value="large">Large ($2.00)</option>
+</select>
+<input type="number" id="friesQty" placeholder="Quantity" min="0">
+
+<h2>Ketchup Packets ($0.25 each)</h2>
+<input type="number" id="ketchupQty" placeholder="Quantity" min="0">
+
+<br><br>
+<button onclick="calculateTotal()">Submit Order</button>
+
+<h2>Order Summary</h2>
+<p id="summary"></p>
+<p id="total"></p>
+
+<script>
+function calculateTotal() {
+    let price = 0;
+    let summary = [];
+
+    // Prices
+    const prices = {
+        chicken: 5.25,
+        beef: 6.25,
+        tofu: 5.75,
+        smallDrink: 1.00,
+        mediumDrink: 1.75,
+        largeDrink: 2.25,
+        smallFries: 1.00,
+        mediumFries: 1.50,
+        largeFries: 2.00,
+        ketchup: 0.25
+    };
+
+    // Sandwich
+    let sandwich = document.getElementById("sandwich").value;
+    let sandwichQty = parseInt(document.getElementById("sandwichQty").value) || 0;
+
+    if (sandwich !== "none" && sandwichQty > 0) {
+        price += prices[sandwich] * sandwichQty;
+        summary.push(sandwich + " sandwich x" + sandwichQty);
+    }
+
+    // Drink
+    let drink = document.getElementById("drink").value;
+    let drinkQty = parseInt(document.getElementById("drinkQty").value) || 0;
+
+    if (drink !== "none" && drinkQty > 0) {
+        price += prices[drink + "Drink"] * drinkQty;
+        summary.push(drink + " drink x" + drinkQty);
+    }
+
+    // Fries
+    let fries = document.getElementById("fries").value;
+    let friesQty = parseInt(document.getElementById("friesQty").value) || 0;
+
+    if (fries !== "none" && friesQty > 0) {
+        price += prices[fries + "Fries"] * friesQty;
+        summary.push(fries + " fries x" + friesQty);
+    }
+
+    // Ketchup
+    let ketchupQty = parseInt(document.getElementById("ketchupQty").value) || 0;
+
+    if (ketchupQty > 0) {
+        price += prices.ketchup * ketchupQty;
+        summary.push("ketchup packets x" + ketchupQty);
+    }
+
+    document.getElementById("summary").innerText = summary.join(", ");
+    document.getElementById("total").innerText = "Total: $" + price.toFixed(2);
+}
+</script>
+
+</body>
+</html>
